@@ -40,6 +40,12 @@ public class CloneSelfSourceGenerator
             if(symbol == null)
                 continue;
 
+            if (symbol.IsImplicitlyDeclared == true)
+                continue;
+            
+            if(symbol is IPropertySymbol propertySymbol == true && propertySymbol.SetMethod == null)
+                continue;
+            
             bodyBuilder.Append('\t');
             bodyBuilder.Append(symbol.Name);
             bodyBuilder.Append(" = ");
