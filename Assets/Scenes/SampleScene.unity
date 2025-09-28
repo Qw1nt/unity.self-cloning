@@ -456,12 +456,13 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _test:
-    _field1: 0
-    _field2: 0
-    _field3: 0
+    _field1: 1
+    _field2: 2
+    _field3: 1
     _field4:
-      One: 0
-      Two: 0
+      One: 66
+      Two: 123
+    <Fifof>k__BackingField: 0
 --- !u!4 &1522112778
 Transform:
   m_ObjectHideFlags: 0

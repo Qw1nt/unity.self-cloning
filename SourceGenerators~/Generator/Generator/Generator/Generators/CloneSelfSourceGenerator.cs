@@ -9,7 +9,7 @@ namespace Generator.Generators;
 
 public class CloneSelfSourceGenerator
 {
-    private static readonly SugarGenerator<ClonedSelfInfo> SugarGenerator = new();
+    private static SugarGenerator<ClonedSelfInfo> SugarGenerator;
     
     public static void Generate(SourceProductionContext spc, in ClonedSelfInfo info)
     {
@@ -26,7 +26,10 @@ public class CloneSelfSourceGenerator
 
     public static string Generate(in ClonedSelfInfo info)
     {
-        SugarGenerator.Context = info;
+        SugarGenerator = new()
+        {
+            Context = info
+        };
 
         var createMethodsBody = string.Empty;
         
