@@ -16,7 +16,7 @@ public class CloneSelfSourceGenerator
         try
         {
             var source = Generate(info);
-            spc.AddSource($"{info.TypeName}.CommonGenerated.g.cs", source);
+            spc.AddSource($"{info.TypeName}.SelfClone.g.cs", source);
         }
         catch (Exception e)
         {
@@ -31,8 +31,6 @@ public class CloneSelfSourceGenerator
             Context = info
         };
 
-        var createMethodsBody = string.Empty;
-        
         var bodyBuilder = StringBuilderPool.Get();
         bodyBuilder.Append("return new ");
         bodyBuilder.AppendLine(info.TypeName);
@@ -49,6 +47,9 @@ public class CloneSelfSourceGenerator
             if(symbol is IPropertySymbol propertySymbol == true && propertySymbol.SetMethod == null)
                 continue;
             
+            if(symbol is IFieldSymbol fieldSymbol == true && fieldSymbol.IsReadOnly == true)
+                continue;
+            
             bodyBuilder.Append('\t');
             bodyBuilder.Append(symbol.Name);
             bodyBuilder.Append(" = ");
@@ -58,7 +59,7 @@ public class CloneSelfSourceGenerator
 
         bodyBuilder.Append("};");
 
-        createMethodsBody = bodyBuilder.ToStringAndReturn();
+        var createMethodsBody = bodyBuilder.ToStringAndReturn();
         
         SugarGenerator.Namespace(info.NamedTypeSymbol, _ =>
         {

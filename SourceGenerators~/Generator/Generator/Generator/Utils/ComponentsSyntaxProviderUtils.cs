@@ -31,7 +31,7 @@ public static class ComponentsSyntaxProviderUtils
             
             FieldsAndProperties = namedTypeSymbol
                 .GetMembers()
-                .Where(x => x.Kind is SymbolKind.Field or SymbolKind.Property)
+                .Where(x => x.Kind is SymbolKind.Field or SymbolKind.Property && x.IsStatic == false)
                 .ToImmutableArray()
         };
     }
